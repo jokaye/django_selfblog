@@ -2,7 +2,7 @@
 # Django settings for selfblog project.
 from os import path
 from platform import platform
-if 'centos' in platform():
+if 'debian' in platform():
     DEBUG = False
 else:
     DEBUG = True
@@ -11,33 +11,45 @@ TEMPLATE_DEBUG = DEBUG
 ROOT_PATH = path.abspath(path.join(path.dirname('settings.py'), path.pardir))
 
 ADMINS = (
-    ('the5fire', 'thefivefire@gmail.com'),
+    ('jokaye', 'vjoaye@gmail.com'),
 )
-ALLOWED_HOSTS = ['localhost', '.the5fire.com']
+ALLOWED_HOSTS = ['localhost', '.singingair.com']
 
 MANAGERS = ADMINS
 
 if DEBUG:
     DOMAIN = 'http://localhost'
-    DB_NAME = 'selfblog.sqlite3'
-    DB_USER = 'root'
-    DB_PWD = 'root'
+    DB_NAME = 'myblog'
+    DB_USER = ''
+    DB_PWD = ''
 else:
     DOMAIN = 'http://www.the5fire.com'
     DB_NAME = 'mydb'
     DB_USER = 'the5fire'
     DB_PWD = 'the5fire'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DB_NAME,                      # Or path to database file if using sqlite3.
-        'USER': DB_USER,                      # Not used with sqlite3.
-        'PASSWORD': DB_PWD,                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'test',                      # Or path to database file if using sqlite3.
+            'USER': '',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'myblog',                      # Or path to database file if using sqlite3.
+            'USER': '',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -137,7 +149,6 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django_xmlrpc',
     'pingback',
-    'duoshuo',
     'blog',
 )
 
@@ -255,5 +266,3 @@ ONE_DAY = 24*60*60
 FIF_MIN = 15 * 60
 FIVE_MIN = 5 * 60
 
-DUOSHUO_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxx'
-DUOSHUO_SHORT_NAME = 'xxxxxxxx'
